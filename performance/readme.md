@@ -1,0 +1,147 @@
+# Packer build and ansible slowness investigation
+
+I've run into this issue with ansible becoming very slow in v2.14.x and v2.15.x.
+It is getting to the point that I cannot upgrade from v2.13.x.
+
+I've created tests to demonstrate the slowdown.
+The tests are based on [this comment by @gburjan](https://github.com/ansible/ansible/issues/79652#issuecomment-1431429205)
+and [this issue by @Herr-Herner](https://github.com/ansible/ansible/issues/79782#issue-1552162251).
+
+Run the vagrant file: `vagrant up --provision`.
+
+## Related issues
+
+- https://github.com/ansible/ansible/issues/79652
+- https://github.com/ansible/ansible/issues/79782
+
+## Related pull requests
+
+- https://github.com/ansible/ansible/pull/79781
+- https://github.com/ansible/ansible/pull/79650
+
+## Output
+
+```
+Sun 02 Jul 11:00:21 [INFO    ] Using Python 3.8
+Sun 02 Jul 11:00:24 [INFO    ] OrderedDict([('Gathering Facts', ' 1.03s'), ('ans', '2.12.0'), ('filters1', ' 0.64s'), ('filters2', ' 0.86s'), ('py', '3.8')])
+Sun 02 Jul 11:00:27 [INFO    ] OrderedDict([('Gathering Facts', ' 0.84s'), ('ans', '2.12.1'), ('filters1', ' 0.72s'), ('filters2', ' 0.92s'), ('py', '3.8')])
+Sun 02 Jul 11:00:30 [INFO    ] OrderedDict([('Gathering Facts', ' 1.08s'), ('ans', '2.12.2'), ('filters1', ' 0.69s'), ('filters2', ' 0.89s'), ('py', '3.8')])
+Sun 02 Jul 11:00:33 [INFO    ] OrderedDict([('Gathering Facts', ' 0.82s'), ('ans', '2.12.3'), ('filters1', ' 0.69s'), ('filters2', ' 0.90s'), ('py', '3.8')])
+Sun 02 Jul 11:00:37 [INFO    ] OrderedDict([('Gathering Facts', ' 0.99s'), ('ans', '2.12.4'), ('filters1', ' 0.70s'), ('filters2', ' 0.93s'), ('py', '3.8')])
+Sun 02 Jul 11:00:40 [INFO    ] OrderedDict([('Gathering Facts', ' 0.82s'), ('ans', '2.12.5'), ('filters1', ' 0.73s'), ('filters2', ' 0.83s'), ('py', '3.8')])
+Sun 02 Jul 11:00:43 [INFO    ] OrderedDict([('Gathering Facts', ' 0.93s'), ('ans', '2.12.6'), ('filters1', ' 1.14s'), ('filters2', ' 0.90s'), ('py', '3.8')])
+Sun 02 Jul 11:00:47 [INFO    ] OrderedDict([('Gathering Facts', ' 0.84s'), ('ans', '2.12.7'), ('filters1', ' 1.10s'), ('filters2', ' 0.90s'), ('py', '3.8')])
+Sun 02 Jul 11:00:51 [INFO    ] OrderedDict([('Gathering Facts', ' 0.99s'), ('ans', '2.12.8'), ('filters1', ' 1.12s'), ('filters2', ' 0.90s'), ('py', '3.8')])
+Sun 02 Jul 11:00:54 [INFO    ] OrderedDict([('Gathering Facts', ' 0.84s'), ('ans', '2.12.9'), ('filters1', ' 1.08s'), ('filters2', ' 0.87s'), ('py', '3.8')])
+Sun 02 Jul 11:00:58 [INFO    ] OrderedDict([('Gathering Facts', ' 0.93s'), ('ans', '2.12.10'), ('filters1', ' 1.08s'), ('filters2', ' 0.84s'), ('py', '3.8')])
+Sun 02 Jul 11:01:01 [INFO    ] OrderedDict([('Gathering Facts', ' 0.85s'), ('ans', '2.13.0'), ('filters1', ' 0.72s'), ('filters2', ' 0.86s'), ('py', '3.8')])
+Sun 02 Jul 11:01:04 [INFO    ] OrderedDict([('Gathering Facts', ' 0.89s'), ('ans', '2.13.1'), ('filters1', ' 1.13s'), ('filters2', ' 0.87s'), ('py', '3.8')])
+Sun 02 Jul 11:01:08 [INFO    ] OrderedDict([('Gathering Facts', ' 0.91s'), ('ans', '2.13.2'), ('filters1', ' 1.20s'), ('filters2', ' 0.89s'), ('py', '3.8')])
+Sun 02 Jul 11:01:12 [INFO    ] OrderedDict([('Gathering Facts', ' 0.87s'), ('ans', '2.13.3'), ('filters1', ' 1.18s'), ('filters2', ' 0.89s'), ('py', '3.8')])
+Sun 02 Jul 11:01:15 [INFO    ] OrderedDict([('Gathering Facts', ' 0.84s'), ('ans', '2.13.4'), ('filters1', ' 1.18s'), ('filters2', ' 0.91s'), ('py', '3.8')])
+Sun 02 Jul 11:01:19 [INFO    ] OrderedDict([('Gathering Facts', ' 0.88s'), ('ans', '2.13.5'), ('filters1', ' 0.74s'), ('filters2', ' 0.90s'), ('py', '3.8')])
+Sun 02 Jul 11:01:22 [INFO    ] OrderedDict([('Gathering Facts', ' 0.84s'), ('ans', '2.13.6'), ('filters1', ' 0.74s'), ('filters2', ' 0.91s'), ('py', '3.8')])
+Sun 02 Jul 11:01:25 [INFO    ] OrderedDict([('Gathering Facts', ' 0.97s'), ('ans', '2.13.7'), ('filters1', ' 0.79s'), ('filters2', ' 0.95s'), ('py', '3.8')])
+Sun 02 Jul 11:01:28 [INFO    ] OrderedDict([('Gathering Facts', ' 0.83s'), ('ans', '2.13.8'), ('filters1', ' 0.75s'), ('filters2', ' 0.89s'), ('py', '3.8')])
+Sun 02 Jul 11:01:31 [INFO    ] OrderedDict([('Gathering Facts', ' 0.92s'), ('ans', '2.13.9'), ('filters1', ' 0.75s'), ('filters2', ' 0.90s'), ('py', '3.8')])
+Sun 02 Jul 11:01:35 [INFO    ] OrderedDict([('Gathering Facts', ' 1.13s'), ('ans', '2.13.10'), ('filters1', ' 0.76s'), ('filters2', ' 0.90s'), ('py', '3.8')])
+Sun 02 Jul 11:01:35 [INFO    ] Using Python 3.9
+Sun 02 Jul 11:01:38 [INFO    ] OrderedDict([('Gathering Facts', ' 0.88s'), ('ans', '2.12.0'), ('filters1', ' 0.69s'), ('filters2', ' 0.94s'), ('py', '3.9')])
+Sun 02 Jul 11:01:41 [INFO    ] OrderedDict([('Gathering Facts', ' 0.84s'), ('ans', '2.12.1'), ('filters1', ' 0.69s'), ('filters2', ' 0.84s'), ('py', '3.9')])
+Sun 02 Jul 11:01:44 [INFO    ] OrderedDict([('Gathering Facts', ' 0.85s'), ('ans', '2.12.2'), ('filters1', ' 0.68s'), ('filters2', ' 0.85s'), ('py', '3.9')])
+Sun 02 Jul 11:01:48 [INFO    ] OrderedDict([('Gathering Facts', ' 1.12s'), ('ans', '2.12.3'), ('filters1', ' 0.73s'), ('filters2', ' 0.94s'), ('py', '3.9')])
+Sun 02 Jul 11:01:51 [INFO    ] OrderedDict([('Gathering Facts', ' 0.84s'), ('ans', '2.12.4'), ('filters1', ' 0.71s'), ('filters2', ' 0.92s'), ('py', '3.9')])
+Sun 02 Jul 11:01:54 [INFO    ] OrderedDict([('Gathering Facts', ' 0.88s'), ('ans', '2.12.5'), ('filters1', ' 0.72s'), ('filters2', ' 0.87s'), ('py', '3.9')])
+Sun 02 Jul 11:01:59 [INFO    ] OrderedDict([('Gathering Facts', ' 1.88s'), ('ans', '2.12.6'), ('filters1', ' 1.13s'), ('filters2', ' 0.92s'), ('py', '3.9')])
+Sun 02 Jul 11:02:02 [INFO    ] OrderedDict([('Gathering Facts', ' 0.85s'), ('ans', '2.12.7'), ('filters1', ' 1.11s'), ('filters2', ' 0.92s'), ('py', '3.9')])
+Sun 02 Jul 11:02:06 [INFO    ] OrderedDict([('Gathering Facts', ' 1.07s'), ('ans', '2.12.8'), ('filters1', ' 1.18s'), ('filters2', ' 0.90s'), ('py', '3.9')])
+Sun 02 Jul 11:02:10 [INFO    ] OrderedDict([('Gathering Facts', ' 0.94s'), ('ans', '2.12.9'), ('filters1', ' 1.06s'), ('filters2', ' 0.92s'), ('py', '3.9')])
+Sun 02 Jul 11:02:13 [INFO    ] OrderedDict([('Gathering Facts', ' 0.84s'), ('ans', '2.12.10'), ('filters1', ' 1.13s'), ('filters2', ' 0.90s'), ('py', '3.9')])
+Sun 02 Jul 11:02:16 [INFO    ] OrderedDict([('Gathering Facts', ' 0.85s'), ('ans', '2.13.0'), ('filters1', ' 0.72s'), ('filters2', ' 0.88s'), ('py', '3.9')])
+Sun 02 Jul 11:02:20 [INFO    ] OrderedDict([('Gathering Facts', ' 0.87s'), ('ans', '2.13.1'), ('filters1', ' 1.21s'), ('filters2', ' 0.93s'), ('py', '3.9')])
+Sun 02 Jul 11:02:23 [INFO    ] OrderedDict([('Gathering Facts', ' 0.86s'), ('ans', '2.13.2'), ('filters1', ' 1.17s'), ('filters2', ' 0.91s'), ('py', '3.9')])
+Sun 02 Jul 11:02:27 [INFO    ] OrderedDict([('Gathering Facts', ' 0.86s'), ('ans', '2.13.3'), ('filters1', ' 1.13s'), ('filters2', ' 0.89s'), ('py', '3.9')])
+Sun 02 Jul 11:02:31 [INFO    ] OrderedDict([('Gathering Facts', ' 0.99s'), ('ans', '2.13.4'), ('filters1', ' 1.21s'), ('filters2', ' 0.86s'), ('py', '3.9')])
+Sun 02 Jul 11:02:34 [INFO    ] OrderedDict([('Gathering Facts', ' 0.85s'), ('ans', '2.13.5'), ('filters1', ' 0.76s'), ('filters2', ' 0.91s'), ('py', '3.9')])
+Sun 02 Jul 11:02:37 [INFO    ] OrderedDict([('Gathering Facts', ' 0.92s'), ('ans', '2.13.6'), ('filters1', ' 0.74s'), ('filters2', ' 0.84s'), ('py', '3.9')])
+Sun 02 Jul 11:02:40 [INFO    ] OrderedDict([('Gathering Facts', ' 0.82s'), ('ans', '2.13.7'), ('filters1', ' 0.76s'), ('filters2', ' 0.89s'), ('py', '3.9')])
+Sun 02 Jul 11:02:43 [INFO    ] OrderedDict([('Gathering Facts', ' 1.07s'), ('ans', '2.13.8'), ('filters1', ' 0.72s'), ('filters2', ' 0.85s'), ('py', '3.9')])
+Sun 02 Jul 11:02:47 [INFO    ] OrderedDict([('Gathering Facts', ' 1.09s'), ('ans', '2.13.9'), ('filters1', ' 0.76s'), ('filters2', ' 0.90s'), ('py', '3.9')])
+Sun 02 Jul 11:02:50 [INFO    ] OrderedDict([('Gathering Facts', ' 0.84s'), ('ans', '2.13.10'), ('filters1', ' 0.71s'), ('filters2', ' 0.84s'), ('py', '3.9')])
+Sun 02 Jul 11:03:50 [INFO    ] OrderedDict([('Gathering Facts', ' 0.85s'), ('ans', '2.14.0'), ('filters1', ' 22.69s'), ('filters2', ' 36.32s'), ('py', '3.9')])
+Sun 02 Jul 11:04:49 [INFO    ] OrderedDict([('Gathering Facts', ' 0.86s'), ('ans', '2.14.1'), ('filters1', ' 22.60s'), ('filters2', ' 34.90s'), ('py', '3.9')])
+Sun 02 Jul 11:05:45 [INFO    ] OrderedDict([('Gathering Facts', ' 0.90s'), ('ans', '2.14.2'), ('filters1', ' 21.75s'), ('filters2', ' 32.44s'), ('py', '3.9')])
+Sun 02 Jul 11:06:43 [INFO    ] OrderedDict([('Gathering Facts', ' 0.88s'), ('ans', '2.14.3'), ('filters1', ' 22.14s'), ('filters2', ' 34.57s'), ('py', '3.9')])
+Sun 02 Jul 11:07:38 [INFO    ] OrderedDict([('Gathering Facts', ' 0.87s'), ('ans', '2.14.4'), ('filters1', ' 21.83s'), ('filters2', ' 31.46s'), ('py', '3.9')])
+Sun 02 Jul 11:08:35 [INFO    ] OrderedDict([('Gathering Facts', ' 0.83s'), ('ans', '2.14.5'), ('filters1', ' 21.45s'), ('filters2', ' 33.72s'), ('py', '3.9')])
+Sun 02 Jul 11:09:31 [INFO    ] OrderedDict([('Gathering Facts', ' 1.03s'), ('ans', '2.14.6'), ('filters1', ' 21.21s'), ('filters2', ' 33.18s'), ('py', '3.9')])
+Sun 02 Jul 11:10:28 [INFO    ] OrderedDict([('Gathering Facts', ' 0.84s'), ('ans', '2.14.7'), ('filters1', ' 21.24s'), ('filters2', ' 33.94s'), ('py', '3.9')])
+Sun 02 Jul 11:11:26 [INFO    ] OrderedDict([('Gathering Facts', ' 0.86s'), ('ans', '2.15.0'), ('filters1', ' 21.49s'), ('filters2', ' 34.77s'), ('py', '3.9')])
+Sun 02 Jul 11:12:23 [INFO    ] OrderedDict([('Gathering Facts', ' 0.84s'), ('ans', '2.15.1'), ('filters1', ' 21.50s'), ('filters2', ' 34.36s'), ('py', '3.9')])
+Sun 02 Jul 11:12:23 [INFO    ] Using Python 3.10
+Sun 02 Jul 11:12:26 [INFO    ] OrderedDict([('Gathering Facts', ' 0.85s'), ('ans', '2.12.0'), ('filters1', ' 0.71s'), ('filters2', ' 0.83s'), ('py', '3.10')])
+Sun 02 Jul 11:12:29 [INFO    ] OrderedDict([('Gathering Facts', ' 0.85s'), ('ans', '2.12.1'), ('filters1', ' 0.69s'), ('filters2', ' 0.87s'), ('py', '3.10')])
+Sun 02 Jul 11:12:32 [INFO    ] OrderedDict([('Gathering Facts', ' 0.86s'), ('ans', '2.12.2'), ('filters1', ' 0.68s'), ('filters2', ' 0.83s'), ('py', '3.10')])
+Sun 02 Jul 11:12:35 [INFO    ] OrderedDict([('Gathering Facts', ' 0.88s'), ('ans', '2.12.3'), ('filters1', ' 0.67s'), ('filters2', ' 0.83s'), ('py', '3.10')])
+Sun 02 Jul 11:12:38 [INFO    ] OrderedDict([('Gathering Facts', ' 0.84s'), ('ans', '2.12.4'), ('filters1', ' 0.71s'), ('filters2', ' 0.83s'), ('py', '3.10')])
+Sun 02 Jul 11:12:42 [INFO    ] OrderedDict([('Gathering Facts', ' 1.04s'), ('ans', '2.12.5'), ('filters1', ' 0.70s'), ('filters2', ' 0.87s'), ('py', '3.10')])
+Sun 02 Jul 11:12:45 [INFO    ] OrderedDict([('Gathering Facts', ' 0.83s'), ('ans', '2.12.6'), ('filters1', ' 1.12s'), ('filters2', ' 0.88s'), ('py', '3.10')])
+Sun 02 Jul 11:12:48 [INFO    ] OrderedDict([('Gathering Facts', ' 0.85s'), ('ans', '2.12.7'), ('filters1', ' 1.07s'), ('filters2', ' 0.85s'), ('py', '3.10')])
+Sun 02 Jul 11:12:52 [INFO    ] OrderedDict([('Gathering Facts', ' 0.87s'), ('ans', '2.12.8'), ('filters1', ' 1.10s'), ('filters2', ' 0.89s'), ('py', '3.10')])
+Sun 02 Jul 11:12:55 [INFO    ] OrderedDict([('Gathering Facts', ' 0.85s'), ('ans', '2.12.9'), ('filters1', ' 1.08s'), ('filters2', ' 0.88s'), ('py', '3.10')])
+Sun 02 Jul 11:12:59 [INFO    ] OrderedDict([('Gathering Facts', ' 0.83s'), ('ans', '2.12.10'), ('filters1', ' 1.07s'), ('filters2', ' 0.88s'), ('py', '3.10')])
+Sun 02 Jul 11:13:02 [INFO    ] OrderedDict([('Gathering Facts', ' 0.83s'), ('ans', '2.13.0'), ('filters1', ' 0.71s'), ('filters2', ' 0.81s'), ('py', '3.10')])
+Sun 02 Jul 11:13:06 [INFO    ] OrderedDict([('Gathering Facts', ' 0.92s'), ('ans', '2.13.1'), ('filters1', ' 1.19s'), ('filters2', ' 0.88s'), ('py', '3.10')])
+Sun 02 Jul 11:13:09 [INFO    ] OrderedDict([('Gathering Facts', ' 0.83s'), ('ans', '2.13.2'), ('filters1', ' 1.15s'), ('filters2', ' 0.87s'), ('py', '3.10')])
+Sun 02 Jul 11:13:13 [INFO    ] OrderedDict([('Gathering Facts', ' 0.85s'), ('ans', '2.13.3'), ('filters1', ' 1.12s'), ('filters2', ' 0.84s'), ('py', '3.10')])
+Sun 02 Jul 11:13:16 [INFO    ] OrderedDict([('Gathering Facts', ' 1.26s'), ('ans', '2.13.4'), ('filters1', ' 1.12s'), ('filters2', ' 0.83s'), ('py', '3.10')])
+Sun 02 Jul 11:13:20 [INFO    ] OrderedDict([('Gathering Facts', ' 0.86s'), ('ans', '2.13.5'), ('filters1', ' 0.75s'), ('filters2', ' 0.85s'), ('py', '3.10')])
+Sun 02 Jul 11:13:23 [INFO    ] OrderedDict([('Gathering Facts', ' 0.83s'), ('ans', '2.13.6'), ('filters1', ' 0.72s'), ('filters2', ' 0.82s'), ('py', '3.10')])
+Sun 02 Jul 11:13:26 [INFO    ] OrderedDict([('Gathering Facts', ' 0.83s'), ('ans', '2.13.7'), ('filters1', ' 0.79s'), ('filters2', ' 0.91s'), ('py', '3.10')])
+Sun 02 Jul 11:13:29 [INFO    ] OrderedDict([('Gathering Facts', ' 0.88s'), ('ans', '2.13.8'), ('filters1', ' 0.78s'), ('filters2', ' 0.88s'), ('py', '3.10')])
+Sun 02 Jul 11:13:32 [INFO    ] OrderedDict([('Gathering Facts', ' 0.84s'), ('ans', '2.13.9'), ('filters1', ' 0.73s'), ('filters2', ' 0.87s'), ('py', '3.10')])
+Sun 02 Jul 11:13:35 [INFO    ] OrderedDict([('Gathering Facts', ' 1.05s'), ('ans', '2.13.10'), ('filters1', ' 0.72s'), ('filters2', ' 0.83s'), ('py', '3.10')])
+Sun 02 Jul 11:14:30 [INFO    ] OrderedDict([('Gathering Facts', ' 0.84s'), ('ans', '2.14.0'), ('filters1', ' 21.38s'), ('filters2', ' 31.32s'), ('py', '3.10')])
+Sun 02 Jul 11:15:24 [INFO    ] OrderedDict([('Gathering Facts', ' 0.87s'), ('ans', '2.14.1'), ('filters1', ' 21.38s'), ('filters2', ' 31.65s'), ('py', '3.10')])
+Sun 02 Jul 11:16:19 [INFO    ] OrderedDict([('Gathering Facts', ' 0.84s'), ('ans', '2.14.2'), ('filters1', ' 21.61s'), ('filters2', ' 31.36s'), ('py', '3.10')])
+Sun 02 Jul 11:17:12 [INFO    ] OrderedDict([('Gathering Facts', ' 0.85s'), ('ans', '2.14.3'), ('filters1', ' 21.05s'), ('filters2', ' 31.25s'), ('py', '3.10')])
+Sun 02 Jul 11:18:07 [INFO    ] OrderedDict([('Gathering Facts', ' 0.94s'), ('ans', '2.14.4'), ('filters1', ' 21.47s'), ('filters2', ' 31.68s'), ('py', '3.10')])
+Sun 02 Jul 11:19:02 [INFO    ] OrderedDict([('Gathering Facts', ' 1.31s'), ('ans', '2.14.5'), ('filters1', ' 21.21s'), ('filters2', ' 31.41s'), ('py', '3.10')])
+Sun 02 Jul 11:19:59 [INFO    ] OrderedDict([('Gathering Facts', ' 0.83s'), ('ans', '2.14.6'), ('filters1', ' 21.42s'), ('filters2', ' 33.75s'), ('py', '3.10')])
+Sun 02 Jul 11:20:56 [INFO    ] OrderedDict([('Gathering Facts', ' 0.86s'), ('ans', '2.14.7'), ('filters1', ' 21.54s'), ('filters2', ' 33.98s'), ('py', '3.10')])
+Sun 02 Jul 11:21:52 [INFO    ] OrderedDict([('Gathering Facts', ' 0.82s'), ('ans', '2.15.0'), ('filters1', ' 21.84s'), ('filters2', ' 33.05s'), ('py', '3.10')])
+Sun 02 Jul 11:22:49 [INFO    ] OrderedDict([('Gathering Facts', ' 0.84s'), ('ans', '2.15.1'), ('filters1', ' 21.49s'), ('filters2', ' 34.03s'), ('py', '3.10')])
+Sun 02 Jul 11:22:49 [INFO    ] Using Python 3.11
+Sun 02 Jul 11:22:52 [INFO    ] OrderedDict([('Gathering Facts', ' 0.81s'), ('ans', '2.12.0'), ('filters1', ' 0.56s'), ('filters2', ' 0.89s'), ('py', '3.11')])
+Sun 02 Jul 11:22:55 [INFO    ] OrderedDict([('Gathering Facts', ' 1.01s'), ('ans', '2.12.1'), ('filters1', ' 0.51s'), ('filters2', ' 0.91s'), ('py', '3.11')])
+Sun 02 Jul 11:22:58 [INFO    ] OrderedDict([('Gathering Facts', ' 0.82s'), ('ans', '2.12.2'), ('filters1', ' 0.57s'), ('filters2', ' 0.90s'), ('py', '3.11')])
+Sun 02 Jul 11:23:01 [INFO    ] OrderedDict([('Gathering Facts', ' 0.84s'), ('ans', '2.12.3'), ('filters1', ' 0.58s'), ('filters2', ' 0.93s'), ('py', '3.11')])
+Sun 02 Jul 11:23:04 [INFO    ] OrderedDict([('Gathering Facts', ' 0.91s'), ('ans', '2.12.4'), ('filters1', ' 0.58s'), ('filters2', ' 0.94s'), ('py', '3.11')])
+Sun 02 Jul 11:23:07 [INFO    ] OrderedDict([('Gathering Facts', ' 0.81s'), ('ans', '2.12.5'), ('filters1', ' 0.59s'), ('filters2', ' 0.93s'), ('py', '3.11')])
+Sun 02 Jul 11:23:10 [INFO    ] OrderedDict([('Gathering Facts', ' 0.82s'), ('ans', '2.12.6'), ('filters1', ' 0.88s'), ('filters2', ' 0.90s'), ('py', '3.11')])
+Sun 02 Jul 11:23:13 [INFO    ] OrderedDict([('Gathering Facts', ' 0.81s'), ('ans', '2.12.7'), ('filters1', ' 0.94s'), ('filters2', ' 0.94s'), ('py', '3.11')])
+Sun 02 Jul 11:23:17 [INFO    ] OrderedDict([('Gathering Facts', ' 0.82s'), ('ans', '2.12.8'), ('filters1', ' 0.92s'), ('filters2', ' 0.92s'), ('py', '3.11')])
+Sun 02 Jul 11:23:20 [INFO    ] OrderedDict([('Gathering Facts', ' 0.89s'), ('ans', '2.12.9'), ('filters1', ' 0.98s'), ('filters2', ' 0.97s'), ('py', '3.11')])
+Sun 02 Jul 11:23:24 [INFO    ] OrderedDict([('Gathering Facts', ' 1.02s'), ('ans', '2.12.10'), ('filters1', ' 0.92s'), ('filters2', ' 0.91s'), ('py', '3.11')])
+Sun 02 Jul 11:23:27 [INFO    ] OrderedDict([('Gathering Facts', ' 0.79s'), ('ans', '2.13.0'), ('filters1', ' 0.58s'), ('filters2', ' 0.91s'), ('py', '3.11')])
+Sun 02 Jul 11:23:30 [INFO    ] OrderedDict([('Gathering Facts', ' 0.78s'), ('ans', '2.13.1'), ('filters1', ' 0.93s'), ('filters2', ' 0.91s'), ('py', '3.11')])
+Sun 02 Jul 11:23:33 [INFO    ] OrderedDict([('Gathering Facts', ' 0.77s'), ('ans', '2.13.2'), ('filters1', ' 0.99s'), ('filters2', ' 0.95s'), ('py', '3.11')])
+Sun 02 Jul 11:23:37 [INFO    ] OrderedDict([('Gathering Facts', ' 0.78s'), ('ans', '2.13.3'), ('filters1', ' 0.96s'), ('filters2', ' 0.95s'), ('py', '3.11')])
+Sun 02 Jul 11:23:40 [INFO    ] OrderedDict([('Gathering Facts', ' 0.86s'), ('ans', '2.13.4'), ('filters1', ' 0.94s'), ('filters2', ' 0.90s'), ('py', '3.11')])
+Sun 02 Jul 11:23:43 [INFO    ] OrderedDict([('Gathering Facts', ' 0.79s'), ('ans', '2.13.5'), ('filters1', ' 0.59s'), ('filters2', ' 0.93s'), ('py', '3.11')])
+Sun 02 Jul 11:23:46 [INFO    ] OrderedDict([('Gathering Facts', ' 0.81s'), ('ans', '2.13.6'), ('filters1', ' 0.60s'), ('filters2', ' 0.90s'), ('py', '3.11')])
+Sun 02 Jul 11:23:49 [INFO    ] OrderedDict([('Gathering Facts', ' 0.80s'), ('ans', '2.13.7'), ('filters1', ' 0.59s'), ('filters2', ' 0.90s'), ('py', '3.11')])
+Sun 02 Jul 11:23:52 [INFO    ] OrderedDict([('Gathering Facts', ' 0.81s'), ('ans', '2.13.8'), ('filters1', ' 0.59s'), ('filters2', ' 0.88s'), ('py', '3.11')])
+Sun 02 Jul 11:23:54 [INFO    ] OrderedDict([('Gathering Facts', ' 0.79s'), ('ans', '2.13.9'), ('filters1', ' 0.60s'), ('filters2', ' 0.89s'), ('py', '3.11')])
+Sun 02 Jul 11:23:57 [INFO    ] OrderedDict([('Gathering Facts', ' 0.77s'), ('ans', '2.13.10'), ('filters1', ' 0.62s'), ('filters2', ' 0.94s'), ('py', '3.11')])
+Sun 02 Jul 11:24:41 [INFO    ] OrderedDict([('Gathering Facts', ' 0.86s'), ('ans', '2.14.0'), ('filters1', ' 15.43s'), ('filters2', ' 27.37s'), ('py', '3.11')])
+Sun 02 Jul 11:25:25 [INFO    ] OrderedDict([('Gathering Facts', ' 0.93s'), ('ans', '2.14.1'), ('filters1', ' 15.18s'), ('filters2', ' 26.88s'), ('py', '3.11')])
+Sun 02 Jul 11:26:11 [INFO    ] OrderedDict([('Gathering Facts', ' 0.86s'), ('ans', '2.14.2'), ('filters1', ' 15.63s'), ('filters2', ' 29.07s'), ('py', '3.11')])
+Sun 02 Jul 11:26:54 [INFO    ] OrderedDict([('Gathering Facts', ' 0.78s'), ('ans', '2.14.3'), ('filters1', ' 15.43s'), ('filters2', ' 27.06s'), ('py', '3.11')])
+Sun 02 Jul 11:27:39 [INFO    ] OrderedDict([('Gathering Facts', ' 2.16s'), ('ans', '2.14.4'), ('filters1', ' 15.11s'), ('filters2', ' 27.29s'), ('py', '3.11')])
+Sun 02 Jul 11:28:25 [INFO    ] OrderedDict([('Gathering Facts', ' 1.01s'), ('ans', '2.14.5'), ('filters1', ' 15.33s'), ('filters2', ' 28.62s'), ('py', '3.11')])
+Sun 02 Jul 11:29:10 [INFO    ] OrderedDict([('Gathering Facts', ' 0.78s'), ('ans', '2.14.6'), ('filters1', ' 15.47s'), ('filters2', ' 28.36s'), ('py', '3.11')])
+Sun 02 Jul 11:29:56 [INFO    ] OrderedDict([('Gathering Facts', ' 0.79s'), ('ans', '2.14.7'), ('filters1', ' 15.45s'), ('filters2', ' 29.42s'), ('py', '3.11')])
+Sun 02 Jul 11:30:43 [INFO    ] OrderedDict([('Gathering Facts', ' 0.96s'), ('ans', '2.15.0'), ('filters1', ' 15.76s'), ('filters2', ' 29.49s'), ('py', '3.11')])
+Sun 02 Jul 11:31:29 [INFO    ] OrderedDict([('Gathering Facts', ' 0.79s'), ('ans', '2.15.1'), ('filters1', ' 15.58s'), ('filters2', ' 29.65s'), ('py', '3.11')])
+```

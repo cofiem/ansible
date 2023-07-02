@@ -1,0 +1,21 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.require_version ">= 2.2.0"
+Vagrant.configure("2") do |config|
+  config.vm.box = "generic/ubuntu2004"
+  vm_hostname = "ansible-dev"
+  config.vm.hostname = vm_hostname
+
+  config.vm.provider "virtualbox" do |v|
+    v.memory = 2048 # in MB
+    v.cpus = 2
+    v.name = vm_hostname
+    v.gui = false
+  end
+
+  config.vm.synced_folder ".", "/vagrant", type: "rsync", rsync__exclude: [".git/", ".vagrant/"]
+  config.vm.provision "shell", inline: "add-apt-repository ppa:deadsnakes/ppa && apt-get update && apt-get install -y python3.7-venv python3.8-venv python3.9-venv python3.10-venv python3.11-venv"
+  config.vm.provision "shell", inline: "mkdir -p /opt/ansible-dev && cd /opt/ansible-dev && python3 /vagrant/main.py /opt/ansible-dev /vagrant /opt/ansible-collections"
+
+end

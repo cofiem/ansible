@@ -1,0 +1,178 @@
+- hosts: localhost
+  connection: local
+
+  vars:
+    active_events:
+      - "-x x"
+      - "-x xxxxxxxxxxxxxx -x xx -x xxxx-xxxxxx"
+      - "-x xxxxxxxxxx -x xx -x xxxxxxxx"
+      - "-x xxxxxxxxxxx -x xx -x xxxxxxxx"
+      - "-x xxxxxxxxxxxx -x xx -x xxxxxxxx"
+      - "-x xxxxxxxxxxx -x xx -x xxxxxxxx"
+      - "-x xxxxxxxxxxxxxxxxxxxxx -x xx -x xxxxxxxx"
+      - "-x xxxxxxxxxx -x xx -x xxxxxx-xxxxxx"
+      - "-x xxxxxxxxxxxxxx -x xx -x xxxxxx-xxxxxx"
+      - "-x xxxxxxxxxx -x xx -x xxxxxx-xxxxxx"
+      - "-x xxxxxxxxxxxxx -x xx -x xxxxxx-xxxxxx"
+      - "-x xxxxxxxxxxxxxxxxxxxxxx -x xx -x xxxxxx-xxxxxx"
+      - "-x xxxxxxxxxxxxxxxxxxxxxx-xxxxxxx -x xx -x xxxxxx-xxxxxx"
+      - "-x xxxxxxxxxxxxxx -x xx -x xxxxxx-xxxxxx"
+      - "-x xxxxxxxxxxxxxxxxxxxx -x xx -x xxxxxx-xxxxxx"
+      - "-x xxxxxxxxxxxx -x xx -x xxx-xxxxxx"
+      - "-x xxxxxxxxxxxxxxxxxx -x xx -x xxx-xxxxxx"
+      - "-x xxxxxxxxxxxxxxxxx -x xx -x xxxxxx"
+      - "-x xxxxxxxxxxxxxxxx -x xx -x xxxxxx"
+      - "-x xxxxxxxxxxxxxxxxx -x xx -x xxxxxx"
+      - "-x xxxxxxxxxxxxx -x xx -x xxxxxx"
+      - "-x xxxxxxxxxxxxx -x xx -x xxxxxx"
+      - "-x xxxxxxxxxxxxx -x xx -x xxxxxxx"
+      - "-x xxxxxxxxxxxxx -x xx -x xxxxxxx"
+      - "-x xxxxxxxxxxxxx -x xx -x xxxxxxx"
+      - "-x xxxxxxxxxxxx -x xx -x xxxxx"
+      - "-x xxxxxxxxxxxxxx -x xx -x xxxxx"
+      - "-x xxxxxxxxxxxx -x xx -x xxxxxxx"
+      - "-x xxxxxxxxxxxxxx -x xx -x xxxxxxx"
+      - "-x xxxxxxxxxxx -x xxx -x xxxxxxxxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxx -x xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxx -x xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxx -x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxx -x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -x xxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxx -x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -x xxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxx -x xxxxxxxxxxxxxxxxxxxxxx -x xxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxx -x xxxxxxxxxxxxxxxxxxxxxxxxxx -x xxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxx -x xxxxxxxxxxxxxxxxxxxxxxxxxxxxx-xxxxxxx -x xxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxx -x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -x xxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxx -x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -x xxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxx -x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -x xxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxx -x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -x xxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxx -x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -x xxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxx -x xxxxxxxxxxxxxxxxxxx -x xxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxx -x xxxxxxxxxxxxxxxxxx -x xxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxx -x xxxxxxxxxxxxxxxxxxxxxx -x xxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxx -x xxxxxxxxxxxxxxxx -x xxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxx -x xxxxxxxxxxxxxxxxxxx -x xxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxx -x xxxxxxxxxxxxxxxxx-xxxxx -x xxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxx -x xxxxxxxxxxxxxxxxxx -x xxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxx -x xxxxxxxxxxxxxxxxxxxxx -x xxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxx -x xxxxxxxxxxxxxxxxxx -x xxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxx -x xxxxxxxxxxxxxxxxxxxx -x xxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxx -x xxxxxxxxxxxxxxxxxxxxx -x xxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxx -x xxxxxxxxxxxxxxxxxxxx -x xxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxx -x xxxxxxxxxxxxxxxxxx -x xxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxx -x xxxxxxxxxxxxxxxxxxxx -x xxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxx -x xxxxxxxxxxxxxxxxxxxxxxxxx -x xxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxx -x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -x xxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxx -x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -x xxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxx -x xxxxxxxxxxxxxxxxxxx -x xxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxx -x xxxxxxxxxxxxxxxxxxxxx -x xxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxx -x xxxxxxxxxxxxxxxxxxxxxxx -x xxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxx -x xxxxxxxxxxxxxxxxxxx -x xxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxx -x xxxxxxxxxxxxxxx -x xxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxx -x xxxxxxxxxxxxxxxxxxxx -x xxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxx -x xxxxxxxxxxxxxxxx -x xxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxx -x xxxxxxxxxxxxxx -x xxxxxx -x xxxxxx -x xxxxxx-x -x xxxxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxx -x xxxxxxxxxxxxxxxx -x xxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxx -x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -x xxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxx -x xxxxxxxxxxxxxxxxxxxx-xxxxxxxx-xxxxx-xxxxxx-x -x xxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxx -x xxxxxxxxxxxxxxxxxxxxxxxx -x xxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxx -x xxxxxxxxxxxxxxxxxx -x xxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxx -x xxxxxxxxxxxxxxxxxxxxxxxxxx -x xxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxx -x xxxxxxxxxxxxxxxxxxxxxxxx -x xxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxx -x xxxxxxxxxxxxxxxxxxxxxxxx -x xxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxx -x xxxxxxxxxxxxxxxxxxxx -x xxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxx -x xxxxxxxxxxxxxxx -x xxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxx -x xxxxxxxxxxxxxxxxxxxxx -x xxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxx -x xxxxxxxxxxxxxx -x xxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxx -x xxxxxxxxxxxxxxxxxxxx-xxxxxx-xxxxxx-xxxxxx-xxxxxx -x xxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxxxxxx"
+      - "-x xxxxxxxxxxxxxxxxx -x xx -x xxxxxxx"
+      - "-x xxxxxxxxxxxx -x x -x xxxxxxx"
+      - "-x xxxxxxxxxxx -x x -x xxxxxxx"
+      - "-x xxxxxxxxxxxxxx -x x -x xxxxxxx"
+      - "-x xxxxxxxxxxx -x xxxxxxxx -x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -x xxxxxxxx-xxxxxx"
+      - "-x xxxxxxxxxxx -x xxxxxxxx -x xxxxxxxxxxxxx -x xxxxxx -x xxxxxxxx-xxxxxx"
+      - "-x xxxxxxxxxxx -x xxxxxxxx -x xxxxxxxxxxxxx -x xxxxxxxx-xxxxxx"
+      - "-x xxxxxxxxxxx -x xxxxxxxx -x xxxxxxxxxxxxxxxxxxxxxxxxxxxx -x xxxxxxxx-xxxxxx"
+      - "-x xxxxxxxxxxx -x xxxxxxxx -x xxxxxxxxxxxxx -x xxxxxx -x xxxxxxxx-xxxxxx"
+      - "-x xxxxxxxxxxx -x xxxxxxxx -x xxxxxxxxxxxxx -x xxxxxxxx-xxxxxx"
+      - "-x xxxxxxxxxxx -x xxxxxxxx -x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -x xxxxxxxxxx-xxxxxx"
+      - "-x xxxxxxxxxxx -x xxxxxxxx -x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -x xxxxxxxxxx-xxxxxx"
+      - "-x xxxxxxxxxxx -x xxxxxxxx -x xxxxxxxxxxxxxxxxxxxxxxxxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxxxxxxx -x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxxxxxxx -x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxxxxxxx -x xxxxxxxxxxxxxxxxxxxxxxxxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxxxxxxx -x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxxxxxxx -x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxxxxxxx -x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -x xxxxx-xxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxxxxxxx -x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -x xxxxx-xxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxxxxxxx -x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -x xxxxx-xxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxxxxxxx -x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -x xxxxx-xxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxxxxxxx -x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -x xxxxx-xxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxxxxxxx -x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -x xxxxx-xxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxxxxxxx -x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -x xxxxx-xxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxxxxxxx -x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -x xxxxx-xxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxxxxxxx -x xxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxxxxxxx -x xxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxxxxxxx -x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxxxxxxx -x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -x xxxxxxxxxx -x xxxxxx-x -x xxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxxxxxxx -x xxxxxx -x xxxxxx-x -x xxxxxxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxxxxxxx -x xxxxxx -x xxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxxxxxxx -x xxxxxx -x xxxxxx-x -x xxxxxxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxxxxxxx -x xxxxxx -x xxxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxxxxxxx -x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -x xxxxxxxxxxx"
+      - "-x xxxxxxxxxxx -x xxxxxxxx -x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -x xxxxxxxxxxx"
+
+  tasks:
+
+    - name: "filters1"
+      set_fact:
+        active_fmt: '{{ active_fmt | default([]) + [ item | replace("  "," ") | replace(" -S ","@",1) | replace(" -S ",",") | replace("@"," -S ") | replace(" a0=0x0 "," a0=0 ") | replace("/ "," ") | replace(" -S all "," ") | replace("-F key=","-k ") ] }}'
+      loop: "{{ active_events }}"
+
+    - name: "filters2"
+      ansible.builtin.user:
+        append: "{{ user.append | default(omit) }}"
+        authorization: "{{ user.authorization | default(omit, true) }}"
+        comment: "{{ user.comment | default(omit, true) }}"
+        create_home: "{{ user.create_home | default(omit, true) }}"
+        expires: "{{ user.expires | default(omit, true) }}"
+        force: "{{ user.force | default(omit) }}"
+        group: "{{ user.group | default(omit, true) }}"
+        groups: "{{ user.groups | default(omit, true) }}"
+        hidden: "{{ user.hidden | default(omit) }}"
+        home: "{{ user.home | default(omit, true) }}"
+        local: "{{ user.local | default(omit) }}"
+        move_home: "{{ user.move_home | default(omit) }}"
+        name: "{{ user.name }}"
+        non_unique: "{{ user.non_unique | default(omit) }}"
+        password: "{{ user.password | default(omit, true) }}"
+        password_expire_max: "{{ user.password_expire_max | default(omit, true) }}"
+        password_expire_min: "{{ user.password_expire_min | default(omit, true) }}"
+        password_lock: "{{ user.password_lock | default(omit) }}"
+        remove: "{{ user.remove | default(omit) }}"
+        shell: "{{ user.shell | default(omit, true) }}"
+        skeleton: "{{ user.skeleton | default(omit, true) }}"
+        state: "{{ user.state | default(omit, true) }}"
+      vars:
+        user: "{{
+            {
+              'name': 'testuser',
+              'state': 'absent',
+            }
+            | combine({ 'test': 'test' } if variable['test'] | default('') | length > 0 else {})
+            | combine({ 'test': 'test' } if variable['test'] | default('') | length > 0 else {})
+            | combine({ 'test': 'test' } if variable['test'] | default('') | length > 0 else {})
+            | combine({ 'test': 'test' } if variable['test'] | default('') | length > 0 else {})
+            | combine({ 'test': 'test' } if variable['test'] | default('') | length > 0 else {})
+            | combine({ 'test': 'test' } if variable['test'] | default('') | length > 0 else {})
+            | combine({ 'test': 'test' } if variable['test'] | default('') | length > 0 else {})
+            | combine({ 'test': 'test' } if variable['test'] | default('') | length > 0 else {})
+            | combine({ 'test': 'test' } if variable['test'] | default('') | length > 0 else {})
+            | combine({ 'test': 'test' } if variable['test'] | default('') | length > 0 else {})
+            | combine({ 'test': 'test' } if variable['test'] | default('') | length > 0 else {})
+            | combine({ 'test': 'test' } if variable['test'] | default('') | length > 0 else {})
+            | combine({ 'test': 'test' } if variable['test'] | default('') | length > 0 else {})
+            | combine({ 'test': 'test' } if variable['test'] | default('') | length > 0 else {})
+            | combine({ 'test': 'test' } if variable['test'] | default('') | length > 0 else {})
+            | combine({ 'test': 'test' } if variable['test'] | default('') | length > 0 else {})
+          }}"
+
